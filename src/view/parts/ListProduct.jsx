@@ -1,5 +1,5 @@
 import React from "react";
-import * as prd from "../parts/CardProduct";
+import * as prd from "./CardProduct";
 
 class ListProduct extends React.Component {
 

@@ -1,4 +1,5 @@
 import React from "react";
+import CartOrder from './CartOrder';
 
 class NavBar extends React.Component {
 
@@ -20,7 +21,13 @@ class NavBar extends React.Component {
           <div className="collapse navbar-collapse" id="navSupport">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" href="#content">scroll to content</a>
+                <a className="nav-link" href="/">Home</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/login">login</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="/content">Content</a>
               </li>
             </ul>
 
@@ -51,6 +58,9 @@ class NavBar extends React.Component {
           </div>
         </div>
       </nav>
+
+      {/* Show item ordered */}
+      <CartOrder state={this.props['state']} />
     </>
   }
 }
