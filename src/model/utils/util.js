@@ -50,34 +50,6 @@ const util = {
     }
 }
 
-const cartHandle = {
-    add: (array, id, qty) => new Promise((sol, jec) => {
-        try {
-            let i = getIndex('id', id, array);
-            if (i < 0) array.push({ id, qty: qty || 1 });
-            else array[i] = { id, qty: array[i]['qty'] + (qty || 1) }
-            sol(array)
-        } catch (error) { jec(error) }
-    }),
-
-    set: (array, id, qty) => new Promise((sol, jec) => {
-        try {
-            let i = getIndex('id', id, array);
-            if (i < 0) array.push({ id, qty: qty || 1 });
-            else if (qty) array[i]['qty'] = qty;
-            else array.slice(i, 1);
-            sol(array)
-        } catch (error) { jec(error) }
-    }),
-
-    delete: (array, id) => new Promise((sol, jec) => {
-        try {
-            array.slice(getIndex('id', id, array), 1);
-            sol(array);
-        } catch (error) { jec(error) }
-    })
-}
-
 const util2D = {
 
     /**
@@ -115,5 +87,48 @@ const util2D = {
     }
 }
 
-export { cartHandle, util2D }
+const storage = {
+    set: (key, data) => localStorage.setItem(key, JSON.stringify(data)),
+    get: (key) => JSON.parse(localStorage.getItem(key)),
+    del: (key) => localStorage.removeItem(key)
+}
+
+const cartHandle = {
+    add: (array, id, qty) => new Promise((sol, jec) => {
+        try {
+            let i = getIndex('id', id, array);
+            if (i < 0) array.push({ id, qty: qty || 1 });
+            else array[i]['qty'] = Number.parseInt(array[i]['qty']) + (qty || 1);
+            sol(array)
+        } catch (error) { jec(error) }
+    }),
+
+    set: (array, id, qty) => new Promise((sol, jec) => {
+        try {
+            let i = getIndex('id', id, array);
+            if (i < 0) array.push({ id, qty: qty || 1 });
+            else if (qty) array[i]['qty'] = qty;
+            else array.slice(i, 1);
+            sol(array)
+        } catch (error) { jec(error) }
+    }),
+
+    delete: (array, id, isIndex) => new Promise((sol, jec) => {
+        try {
+            array.slice(isIndex ? id : getIndex('id', id, array), 1);
+            sol(array);
+        } catch (error) { jec(error) }
+    })
+}
+
+const sort = {
+    dinamic: (_data, key) => {
+        let dire = 'x,y'; // default ascending
+        let desc = key.startsWith('-');
+        if (desc) { dire = 'y,x'; key = key.substring(1) }
+        eval(`_data.sort((${dire})=>x[key]<y[key]?-1:y[key]<x[key]?1:0)`)
+    }
+}
+
+export { cartHandle, util2D, storage, sort }
 export default util;

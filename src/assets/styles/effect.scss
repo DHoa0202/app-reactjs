@@ -1,0 +1,43 @@
+// button effect
+.button {
+	background: linear-gradient(0deg, #ffee00d8, #ff00c789, #00d9ff98);
+	cursor: pointer;
+	text-align: center;
+	transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+
+	&:after {
+		content: "🛒";
+		font-size: 1.5rem;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		transition: all 0.5s;
+		box-shadow: 0 0 3rem 3rem #00b8ff;
+	}
+
+	&:active {
+		&:after {
+			box-shadow: 0 0 1em #eeff00;
+			border-radius: 4em;
+			left: 0;
+			top: 0;
+			opacity: 1;
+			transition: all .5s;
+		}
+	}
+}
+
+// voucher
+.vc {
+	background-color: #fff677d8;
+	border-radius: 1rem;
+	color: #ff0000;
+	text-shadow: 0 0 5px #fbff00de;
+	text-align: center;
+	padding: .3rem .5rem;
+	position: relative;
+}

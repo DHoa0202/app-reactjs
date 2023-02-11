@@ -20,7 +20,7 @@ class NavBar extends React.Component {
           <div className="collapse navbar-collapse" id="navSupport">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link" href="#">Link</a>
+                <a className="nav-link" href="#content">scroll to content</a>
               </li>
             </ul>
 
