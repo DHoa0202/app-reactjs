@@ -8,9 +8,5 @@ import Application from './view/application';
 import reportWebVitals from './control/reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <Application />
-  </React.StrictMode>
-);
+root.render(<Application />);
 reportWebVitals();

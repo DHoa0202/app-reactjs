@@ -5,12 +5,18 @@ import '../assets/styles/app.scss';
 import '../assets/styles/effect.scss'
 import { storage as st } from '../model/utils/util';
 import { products } from '../model/utils/data';
+import dao from '../model/dao/fetchApi'
 import NavBar from './components/navbar';
 import HomePage from './pages/HomePage';
 import Content from './pages/Content'
 import LoginForm from './pages/LoginForm';
 
 const Application = () => {
+
+  // test fetch API
+  // dao.del('http://localhost:8080/api/categories/4')
+  //   .then(res => console.log(res))
+  //   .catch(err => console.error(err))
 
   const state = useState({ cart: st.get('cart') || [], products });
 
