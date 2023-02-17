@@ -1,19 +1,21 @@
 import React from "react";
-import logo from '../../assets/data/logo.svg';
+import ListProduct from '../parts/ListProduct'
+import FilterProduct from '../parts/FilterProduct';
+import { products } from '../../model/utils/data';
 
 class HomePage extends React.Component {
     render() {
-        return <>
-            <header className="App-header" id='content'>
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-                    Learn React
-                </a>
-            </header>
-        </>
+        let state = this.props['state'];
+        return <div className='container-fluid'>
+            <div className='row' style={{ backgroundColor: '#282c34', color: '#ffffff' }}>
+                <div className='col-lg-8'>
+                    <ListProduct state={state} qty={3} type={''} />
+                </div>
+                <div className='col-lg-4'>
+                    <FilterProduct state={state} heading={'Filter product'} />
+                </div>
+            </div>
+        </div>
     }
 }
 

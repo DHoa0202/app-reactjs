@@ -38,8 +38,11 @@ const vrProduct = (props) => {
         <img src={e.image} className="card-img-top" alt={e.name} />
         <div className="card-body">
             <h5 className="card-title">{e.name}</h5>
+            <div className="position-absolute bottom-0">
+                <h6 className="vc">{nf.format(e.price)}</h6>
+            </div>
         </div>
-        <button className="position-absolute top-0 end-0 p-2 border bg-success rounded-circle"
+        <button className="position-absolute top-0 end-0 p-2 border rounded-circle button"
             onClick={evt => handleState(evt, e, state)}
         >➕</button>
     </div>
@@ -56,10 +59,13 @@ const hrProduct = (props) => {
             <div className="col-md-8">
                 <div className="card-body">
                     <h5 className="card-title">{e.name}</h5>
+                    <div className="position-absolute bottom-0">
+                        <h6 className="vc">{nf.format(e.price)}</h6>
+                    </div>
                 </div>
             </div>
         </div>
-        <button className="position-absolute top-0 end-0 p-2 border bg-success rounded-circle"
+        <button className="position-absolute top-0 end-0 p-2 border rounded-circle button"
             onClick={evt => handleState(evt, e, state)}
         >➕</button>
     </div>

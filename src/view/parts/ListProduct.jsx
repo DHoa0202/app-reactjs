@@ -3,36 +3,49 @@ import * as prd from "./CardProduct";
 
 class ListProduct extends React.Component {
 
-    #paging(range) {
-        return <>
-            <ul className="pagination justify-content-center">
-                <li className="page-item"><a className="page-link" data-bs-target="#carouselProduct" data-bs-slide="prev">Previous</a></li>
-                {range.map((e, i) => <li className="page-item" key={i}>
-                    <a className="page-link" data-bs-target="#carouselProduct" data-bs-slide-to={i}>{e}</a>
-                </li>)}
-                <li className="page-item"><a className="page-link" data-bs-target="#carouselProduct" data-bs-slide="next">Next</a></li>
-            </ul>
-        </>
+    #typeItem(data, state, type) {
+        switch (type) {
+            case 'vr': case 'vertical':
+                return data.map(e => <prd.vrProduct key={e.id} params={[e, state]} />);
+            case 'hr': case 'horizontal':
+                return data.map(e => <prd.hrProduct key={e.id} params={[e, state]} />);
+            default:
+                return data.map(e => <prd.default key={e.id} params={[e, state]} />);
+        }
     }
 
     #carouselItem(data, key, className) {
-        let state = this.props['state']
-        let txt = 'carousel-item container';
+        const state = this.props['state']
+        const type = this.props['type'];
+        const txt = 'carousel-item container';
 
         return <div className={className ? `${txt} ${className}` : txt} key={key}>
             <div className="container">
                 <div className="row g-2" style={{ maxHeight: '80vh', overflow: "auto" }}>
-                    {data.map(e => <prd.default key={e.id} params={[e, state]} />)}
+                    {this.#typeItem(data, state, type)}
                 </div>
             </div>
         </div>
     }
 
+    #paging(range, carouselId) {
+        return <>
+            <ul className="pagination justify-content-center">
+                <li className="page-item"><a className="page-link" data-bs-target={`#${carouselId}`} data-bs-slide="prev">Previous</a></li>
+                {range.map((e, i) => <li className="page-item" key={i}>
+                    <a className="page-link" data-bs-target={`#${carouselId}`} data-bs-slide-to={i}>{e}</a>
+                </li>)}
+                <li className="page-item"><a className="page-link" data-bs-target={`#${carouselId}`} data-bs-slide="next">Next</a></li>
+            </ul>
+        </>
+    }
+
     render() {
+        const carouselId = 'carouselProduct';
         let [obj] = this.props['state'];
-        let [key, qty] = [1, this.props.qty || 3];
-        var data = Object.assign([], obj.products);
-        var items = [], pagination = [];
+        let [key, qty] = [1, this.props['qty'] || 3];
+        let data = Object.assign([], obj.products);
+        let items = [], pagination = [];
         if (!data.length) return;
 
         if (data.length > qty) {
@@ -47,18 +60,20 @@ class ListProduct extends React.Component {
 
 
         return <>
-            <h1 className="text-center">List product</h1>
+            <h1 className="text-center">{this.props['heading'] || 'List product'}</h1>
             <hr />
             {
+                // SHOW PRODUCT
                 items.length > 0 &&
-                <div id="carouselProduct" className="carousel slide">
+                <div id={carouselId} className="carousel slide">
                     <div className="carousel-inner">{items}</div>
                 </div>
             }
             {
+                // SHOW PAGINATION
                 pagination.length > 1 &&
                 <nav className="mt-1" aria-label="Page navigation">
-                    {this.#paging(pagination)}
+                    {this.#paging(pagination, carouselId)}
                 </nav>
             }
         </>

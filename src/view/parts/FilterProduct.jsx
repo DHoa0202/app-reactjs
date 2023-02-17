@@ -42,20 +42,20 @@ class FilterProduct extends React.Component {
 
         data = state['products'];
         sort.dinamic(data, selected ? key : 'id')
-        
+
         this.setState({ orderBySelected: key || selected });
         this.#handleState(data);
     }
 
     #handleCateFilter = (evt) => {
         // set class active on list-items to show style display
-        // setPermClass(evt.target, document.querySelector('#listGroupOrderBy'), '')
+        // setPermClass(evt.target, document.querySelector(`#listGroupOrderBy${randomId}`), '')
 
         var data = products;
         let selected = setPermClass(evt.target, evt.target.parentElement, ' active');
-        
-        if(this.state.orderBySelected) sort.dinamic(data, this.state.orderBySelected)
-        if(selected) data = data.filter(e => e.category_id == evt.target.value);
+
+        if (this.state.orderBySelected) sort.dinamic(data, this.state.orderBySelected)
+        if (selected) data = data.filter(e => e.category_id == evt.target.value);
 
         this.setState({ categorySelected: evt.target.value || selected })
         this.#handleState(data);
@@ -68,19 +68,21 @@ class FilterProduct extends React.Component {
     }
 
     render() {
+        const randomId = Math.floor(Math.random() * 8888)
+
         return <React.Fragment>
-            <h1 className="text-center">Filter</h1>
+            <h1 className="text-center">{this.props['heading'] || 'Filter'}</h1>
             <hr />
-            <div className="accordion" id="accordionFilter">
+            <div className="accordion" id={`accordionFilter${randomId}`}>
                 <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingOne">
-                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSearch"
-                            aria-expanded="true" aria-controls="collapseSearch">
+                    <h2 className="accordion-header" id={`headingOne${randomId}`}>
+                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#collapseSearch${randomId}`}
+                            aria-expanded="true" aria-controls={`collapseSearch${randomId}`}>
                             Search like keywords
                         </button>
                     </h2>
-                    <div id="collapseSearch" className="accordion-collapse collapse show" aria-labelledby="headingOne"
-                        data-bs-parent="#accordionFilter">
+                    <div id={`collapseSearch${randomId}`} className="accordion-collapse collapse show" aria-labelledby={`headingOne${randomId}`}
+                        data-bs-parent={`#accordionFilter${randomId}`}>
                         <div className="accordion-body overflow-auto d-flex gap-3">
                             <form className="d-flex w-100" role="search" onSubmit={(evt) => this.#searchHandle(evt)}>
                                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"
@@ -97,16 +99,16 @@ class FilterProduct extends React.Component {
 
                 {/* ORDER BY */}
                 <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingOrderBy">
-                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOrderBy"
-                            aria-expanded="false" aria-controls="collapseOrderBy">
+                    <h2 className="accordion-header" id={`headingOrderBy${randomId}`}>
+                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapseOrderBy${randomId}`}
+                            aria-expanded="false" aria-controls={`collapseOrderBy${randomId}`}>
                             Order by
                         </button>
                     </h2>
-                    <div id="collapseOrderBy" className="accordion-collapse collapse" aria-labelledby="headingOrderBy"
-                        data-bs-parent="#accordionFilter">
+                    <div id={`collapseOrderBy${randomId}`} className="accordion-collapse collapse" aria-labelledby={`headingOrderBy${randomId}`}
+                        data-bs-parent={`#accordionFilter${randomId}`}>
                         <div className="accordion-body">
-                            <ul className="list-group" id="listGroupOrderBy">
+                            <ul className="list-group" id={`listGroupOrderBy${randomId}`}>
                                 {keysOrderBy.map(e =>
                                     <li className="list-group-item" data-bs-target="#carouselProduct" data-bs-slide-to={0} key={e.id}
                                         value={e.id} style={{ cursor: 'pointer' }} onClick={(evt) => this.#orderByHandle(evt)}
@@ -119,18 +121,19 @@ class FilterProduct extends React.Component {
 
                 {/* CATEGORIES */}
                 <div className="accordion-item">
-                    <h2 className="accordion-header" id="headingCategory">
-                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategory"
-                            aria-expanded="false" aria-controls="collapseCategory">
+                    <h2 className="accordion-header" id={`headingCategory${randomId}`}>
+                        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapseCategory${randomId}`}
+                            aria-expanded="false" aria-controls={`collapseCategory${randomId}`}>
                             Filter by category
                         </button>
                     </h2>
-                    <div id="collapseCategory" className="accordion-collapse collapse" aria-labelledby="headingCategory"
-                        data-bs-parent="#accordionFilter">
+                    <div id={`collapseCategory${randomId}`} className="accordion-collapse collapse" aria-labelledby={`headingCategory${randomId}`}
+                        data-bs-parent={`#accordionFilter${randomId}`}>
                         <div className="accordion-body overflow-auto d-flex gap-3">
-                            <ul className="w-100 list-group list-group-flush" id="listGroupCategory">
+                            <ul className="w-100 list-group list-group-flush" id={`listGroupCategory${randomId}`}>
                                 {categories.map(e =>
-                                    <li className="list-group-item" data-bs-target="#carouselProduct" data-bs-slide-to={0} key={e.id}
+                                    <li className="list-group-item" key={e.id}
+                                        data-bs-target="#carouselProduct" data-bs-slide-to={0}
                                         value={e.id} style={{ cursor: 'pointer' }} onClick={(evt) => this.#handleCateFilter(evt)}
                                     >{e.name}</li>)
                                 }

@@ -24,5 +24,5 @@ const dao = {
     del: async (url) => (await fetch(url, setHeader('DELETE'))).json()
 }
 
-export {header};
+export { header };
 export default dao;
