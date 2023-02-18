@@ -19,6 +19,7 @@ const Application = () => {
    */
 
   const state = useState({ cart: st.get('cart') || [], products });
+  const token = useState();
 
   return <>
     <Router>
@@ -26,7 +27,7 @@ const Application = () => {
         <NavBar state={state} />
         <Routes>
           <Route path='/' exact element={<HomePage state={state} />} />
-          <Route path='/login' exact element={<LoginForm />} />
+          <Route path='/login' exact element={<LoginForm token={token}/>} />
           <Route path='/content' exact element={<Content state={state} />} />
         </Routes>
       </div>

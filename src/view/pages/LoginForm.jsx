@@ -1,6 +1,26 @@
 import React from "react"
+import axios from "axios";
 
 class LoginForm extends React.Component {
+
+  #login = (evt) => {
+    evt.preventDefault();
+
+    const url = 'http://localhost:8080/api/accounts/login';
+    const [data, setToken] = this.props['token'];
+    const user = this.state;
+    const config = {
+      headers: {
+        authorization: data?.accessToken,
+        'Content-Type': 'application/json'
+        // multipart/form-data || application/x-www-form-urlencoded
+      }
+    }
+
+    axios.post(url, user, config)
+      .then(r => setToken(r.data))
+      .catch(e => console.error(e));
+  }
 
   #showPass = (evt, id) => {
     let inp = document.getElementById(id);
@@ -23,7 +43,7 @@ class LoginForm extends React.Component {
 
   render() {
     return <>
-      <form className="p-3 w-50 m-auto border rounded-3">
+      <form className="p-3 w-50 m-auto border rounded-3" onSubmit={this.#login}>
         <div className="mb-3">
           <label htmlFor="username" className="form-label">Username</label>
           <input type="text" className="form-control" id="username" onChange={this.#dataHandle} />
@@ -41,7 +61,7 @@ class LoginForm extends React.Component {
           <label className="form-check-label" htmlFor="rememberMe">Check me out</label>
         </div>
         <div className="text-end">
-          <button type="button" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary">Submit</button>
         </div>
       </form>
     </>
